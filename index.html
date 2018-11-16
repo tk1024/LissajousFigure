@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>LissajousFigure</title>
+  <style>
+    #canvas {
+      border: 1px solid #aaa;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <script>
+    const cWidth = 480;
+    const cHeight = 480;
+
+    function sin(degree) {
+      return Math.sin(degree * Math.PI / 180)
+    }
+
+    function cos(degree) {
+      return Math.cos(degree * Math.PI / 180)
+    }
+
+    function point(ctx, x, y) {
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + 1, y + 1);
+    }
+
+    function render(ctx, j) {
+      console.log(j * 10)
+      ctx.clearRect(-cWidth / 2, -cHeight / 2, cWidth, cHeight);
+      for (let i = 0; i < 360; i++) {
+        ctx.beginPath();
+        point(ctx, cos(2 * i) * (cWidth / 2 - 10), sin(3 * i + j * 10) * (cHeight / 2 - 10));
+        ctx.stroke();
+      }
+    }
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = cWidth;
+    canvas.height = cHeight;
+
+    ctx.translate(cWidth / 2, cHeight / 2);
+
+    let j = 0;
+
+    setInterval(() => {
+      j++;
+      render(ctx, (j + 100) / 100)
+    }, 30)
+  </script>
+</body>
+</html>
